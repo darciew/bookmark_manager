@@ -1,4 +1,5 @@
 require 'pg'
+require 'uri'
 
 class Bookmarks
 
@@ -19,7 +20,11 @@ class Bookmarks
       con = PG.connect :dbname => 'bookmark_manager'
     end
     con.exec("INSERT INTO bookmarks (url) VALUES ('#{url}')")
+  end
 
+  def self.valid_url?(url)
+    url_regexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
+    url =~ url_regexp ? true : false
   end
 
 end

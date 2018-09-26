@@ -1,4 +1,5 @@
 require_relative './setup_test_database'
+require 'pry'
 
 ENV['ENVIRONMENT'] = 'test'
 
@@ -13,6 +14,7 @@ require 'capybara'
 require 'capybara/rspec'
 require 'simplecov'
 require 'simplecov-console'
+require 'features/web_helpers'
 
 Capybara.app = BookmarkApp
 

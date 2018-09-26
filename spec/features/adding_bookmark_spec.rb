@@ -1,15 +1,19 @@
 feature 'Adding bookmarks' do
   scenario 'user can add a bookmark to their list' do
-    con = PG.connect :dbname => 'bookmark_manager_test'
-
-    con.exec("INSERT INTO bookmarks VALUES(1, 'http://www.makersacademy.com');")
-    con.exec("INSERT INTO bookmarks VALUES(2, 'http://www.destroyallsoftware.com');")
-    con.exec("INSERT INTO bookmarks VALUES(3, 'http://www.google.com');")
-
+    connect_test_database
     visit '/bookmarks/add'
     fill_in 'url', with: 'http://www.facebook.com'
     click_button "Add Bookmark"
 
     expect(page).to have_content 'http://www.facebook.com'
   end
+
+  scenario 'user add an incorrect URL' do
+    connect_test_database
+    visit '/bookmarks/add'
+    fill_in 'url', with: 'ww.yahoo.com'
+    click_button "Add Bookmark"
+    expect(page).to have_content 'URL not valid'
+  end
+
 end
