@@ -25,6 +25,23 @@
         null,
         null
       ],
+      "/Users/darciewalsh/Projects/bookmark_manager/spec/features/adding_bookmark_spec.rb": [
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null
+      ],
       "/Users/darciewalsh/Projects/bookmark_manager/spec/features/home_page_spec.rb": [
         null,
         1,
@@ -54,6 +71,6 @@
         null
       ]
     },
-    "timestamp": 1537893156
+    "timestamp": 1537976253
   }
 }
