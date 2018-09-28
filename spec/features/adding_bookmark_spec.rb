@@ -13,6 +13,8 @@ feature 'Adding bookmarks' do
     visit '/bookmarks/add'
     fill_in 'url', with: 'ww.yahoo.com'
     click_button "Add Bookmark"
+
+    expect(page).not_to have_content 'ww.yahoo.com'
     expect(page).to have_content 'URL not valid'
   end
 

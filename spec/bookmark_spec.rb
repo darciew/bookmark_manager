@@ -1,7 +1,7 @@
 require 'bookmarks'
 
 describe Bookmarks do
-  
+
   describe '.view_all' do
     it 'shows a list of bookmarks' do
       con = PG.connect :dbname => 'bookmark_manager_test' # connects to empty database table to use for testing purposes - Tests should always run against an empty database.
@@ -20,8 +20,14 @@ describe Bookmarks do
 
   describe '.add' do
     it 'adds a bookmark' do
-      Bookmarks.add(url: 'www.hello.com')
-      expect(Bookmarks.view_all).to include('www.hello.com')
+      Bookmarks.add(url: 'http://www.hello.com')
+      expect(Bookmarks.view_all).to include('http://www.hello.com')
+    end
+
+    it 'does not add bookmark if URL is invalid' do
+      Bookmarks.add(url: 'ww.yahoo.com')
+      expect(Bookmarks.view_all).not_to include('ww.yahoo.com')
     end
   end
+
 end
