@@ -7,26 +7,34 @@ describe Bookmarks do
       con = PG.connect :dbname => 'bookmark_manager_test' # connects to empty database table to use for testing purposes - Tests should always run against an empty database.
 
       #adds the test data
-      con.exec("INSERT INTO bookmarks (url) VALUES ('http://www.makersacademy.com');")
-      con.exec("INSERT INTO bookmarks (url) VALUES ('http://www.destroyallsoftware.com');")
-      con.exec("INSERT INTO bookmarks (url) VALUES ('http://www.google.com');")
+      Bookmarks.add(url: 'http://www.makersacademy.com', title: 'Makers Academy')
+      Bookmarks.add(url: 'http://www.destroyallsoftware.com', title: 'Destory All Software')
+      Bookmarks.add(url: 'http://www.google.com', title: 'Google')
 
       bookmarks = Bookmarks.view_all
-      expect(bookmarks).to include("http://www.google.com")
-      expect(bookmarks).to include("http://www.destroyallsoftware.com")
-      expect(bookmarks).to include("http://www.makersacademy.com")
+      bookmark = Bookmarks.view_all.first
+
+      expect(bookmarks.length).to eq 3
+      expect(bookmark).to be_a Bookmarks
+      expect(bookmark).to respond_to(:id) # we do not check the value because the id can change
+      expect(bookmark.title).to eq 'Makers Academy'
+      expect(bookmark.url).to eq 'http://www.makersacademy.com'
     end
   end
 
   describe '.add' do
     it 'adds a bookmark' do
-      Bookmarks.add(url: 'http://www.hello.com')
-      expect(Bookmarks.view_all).to include('http://www.hello.com')
+      bookmark = Bookmarks.add(url: 'http://www.hello.com', title: 'Test Bookmark')
+
+      expect(bookmark).to be_a Bookmarks
+      expect(bookmark).to respond_to(:id)
+      expect(bookmark.title).to eq 'Test Bookmark'
     end
 
     it 'does not add bookmark if URL is invalid' do
-      Bookmarks.add(url: 'ww.yahoo.com')
-      expect(Bookmarks.view_all).not_to include('ww.yahoo.com')
+      bookmark = Bookmarks.add(url: 'ww.yahoo.com', title: 'Yahoot')
+
+      expect(bookmark).not_to be_a Bookmarks
     end
   end
 

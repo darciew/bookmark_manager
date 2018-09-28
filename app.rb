@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/flash'
-require './lib/bookmarks'
+require 'uri'
+require_relative './lib/bookmarks'
 
 class BookmarkApp < Sinatra::Base
   enable :sessions
@@ -11,7 +12,7 @@ class BookmarkApp < Sinatra::Base
   end
 
   post '/bookmarks' do
-    flash[:notice] = "URL not valid" unless Bookmarks.add(url: params['url']) 
+    flash[:notice] = "URL not valid" unless Bookmarks.add(url: params[:url], title: params[:title])
     redirect '/bookmarks'
   end
 
